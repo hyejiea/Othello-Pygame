@@ -16,6 +16,6 @@ Minimax algorithm searches entire nodes, even if it is obvious that some nodes o
 
 # References
 
-/http://www.cs.columbia.edu/~sedwards/classes/2020/4995-fall/reports/Othello.pdf
-/http://cs.indstate.edu/~aaljubran/paper.pdf
+http://www.cs.columbia.edu/~sedwards/classes/2020/4995-fall/reports/Othello.pdf
+http://cs.indstate.edu/~aaljubran/paper.pdf
 https://github.com/IcePear-Jzx/Othello-AI

@@ -1,6 +1,6 @@
 # Othello-Pygame
 
-This is an Othello Game with heuristic search MiniMax Algorith with Alpha-beta pruning.
+This is an Othello Game with heuristic search MiniMax Algorithm with Alpha-beta pruning.
 
 # Othello 
 

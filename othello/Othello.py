@@ -28,6 +28,9 @@ class Chessboard:
         # init available pos
         self.available = []
         self.updateAvailable()
+        self.mobility = Mobility()
+    def update_mobility(self):
+        self.mobility.update_mobility(self)
 
 
     def updateAvailable(self):
@@ -171,7 +174,7 @@ class Chessboard:
                         self.count_stable_white += 1
                     elif self.chesses[i][j] == 2:
                         self.count_stable_black += 1
-    
+
 
     def copy(self):
         chessboard_new = Chessboard()
@@ -264,7 +267,7 @@ def draw(screen, images, chessboard):
                 color = images.available
             screen.blit(color, (margin + j * width + width // 2 - images.width // 2,
                                 margin + i * width + width // 2 - images.width // 2))
-    
+
     # draw count
     pos = margin * 2 + chessboard.width * col
     if chessboard.offense == 1:
@@ -288,3 +291,35 @@ def draw(screen, images, chessboard):
     textRectObj = textSurfaceObj.get_rect()
     textRectObj.center = (pos + 100, pos - 150)
     screen.blit(textSurfaceObj, textRectObj)
+
+class Mobility:
+    def __init__(self):
+        self.mobility = 0
+
+    def update_mobility(self, chessboard):
+        self.mobility = 0
+        for i in range(8):
+            for j in range(8):
+                if chessboard.chesses[i][j] == 0:
+                    for dx, dy in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
+                        if self.is_capturing(chessboard, i, j, dx, dy, chessboard.offense):
+                            self.mobility += 1
+
+    def is_capturing(self, chessboard, x, y, dx, dy, current_player):
+        opponent = 1 if current_player == 2 else 2
+        x += dx
+        y += dy
+        if x < 0 or x > 7 or y < 0 or y > 7:
+            return False
+        if chessboard.chesses[x][y] != opponent:
+            return False
+        x += dx
+        y += dy
+        while x >= 0 and x <= 7 and y >= 0 and y <= 7:
+            if chessboard.chesses[x][y] == 0:
+                return False
+            if chessboard.chesses[x][y] == current_player:
+                return True
+            x += dx
+            y += dy
+        return False

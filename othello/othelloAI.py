@@ -8,6 +8,9 @@ class ChessboardTreeNode:
         # self.kids: {(i, j): node}
         self.kids = {}
         self.chessboard = chessboard
+        mobility = Mobility()
+        mobility.update_mobility(chessboard)
+
 
     def getScore(self):
         chessboard = self.chessboard
@@ -35,7 +38,7 @@ class ChessboardTree:
 
     def findBestChess(self, player_color):
         scores = {}
-        alpha = -6400
+        alpha = -9999
         for key in self.root.kids:
             score = self.MaxMin(self.root.kids[key], player_color,
                                 self.expandLayer - 1, alpha)
@@ -53,7 +56,7 @@ class ChessboardTree:
         if layer and node.chessboard.available:
             # min layer
             if node.chessboard.offense == player_color:
-                beta = 6400
+                beta = 9999
                 for i, j in node.chessboard.available:
                     if (i, j) in node.kids:
                         score = self.MaxMin(
@@ -75,7 +78,7 @@ class ChessboardTree:
                 return beta
             # max layer
             else:
-                alpha = -6400
+                alpha = -9999
                 for i, j in node.chessboard.available:
                     if (i, j) in node.kids:
                         score = self.MaxMin(

@@ -8,15 +8,14 @@ class ChessboardTreeNode:
         # self.kids: {(i, j): node}
         self.kids = {}
         self.chessboard = chessboard
-        mobility = Mobility()
-        mobility.update_mobility(chessboard)
+        chessboard = Chessboard()
 
 
     def getScore(self):
         chessboard = self.chessboard
         return 100 * (chessboard.count_stable_white - chessboard.count_stable_black) \
-            + (chessboard.count_total_stable_direct_white
-               - chessboard.count_total_stable_direct_black)
+            + (chessboard.count_total_stable_direct_white - chessboard.count_total_stable_direct_black) \
+            + (chessboard.black_m - chessboard.white_m)
 
 
 class ChessboardTree:
@@ -24,7 +23,7 @@ class ChessboardTree:
     def __init__(self, node):
         self.root = node
         # self.expandLayer >= 2
-        self.expandLayer = 5
+        self.expandLayer = 4
 
     def expandTree(self):
         node = self.root
@@ -101,6 +100,7 @@ class ChessboardTree:
         else:
             node.chessboard.updateStable()
             node.chessboard.updateCount()
+            node.chessboard.update_mobility()
             score = node.getScore()
             # print('layer:', layer, 'leaf:', node.score)
             return score
@@ -120,7 +120,6 @@ def setChessAI(chessboard, set_i, set_j):
         # update
         chessboard_new.reverse(set_i, set_j)
         chessboard_new.updateAvailable()
-        # chessboard_new.updateStable()
         chessboard_new.updateCount()
 
         if chessboard_new.count_available == 0:

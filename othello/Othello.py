@@ -7,8 +7,8 @@ class Chessboard:
         self.width = 60
         self.row = self.col = 8
         self.margin = 100
-        self.black_m = 0
-        self.white_m = 0
+        # self.black_m = 0
+        # self.white_m = 0
         self.chesses = [[0 for _ in range(self.col)] for _ in range(self.row)]
         # init stable chesses
         self.stable = [[0 for _ in range(self.col)] for _ in range(self.row)]
@@ -32,36 +32,36 @@ class Chessboard:
         self.updateAvailable()
 
 
-    def update_mobility(self):
-        self.black_m = 0
-        self.white_m = 0
-        for i in range(8):
-            for j in range(8):
-                if self.chesses[i][j] == 0:
-                    for dx, dy in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
-                        if self.is_capturing(i, j, dx, dy, 1):
-                            self.white_m += 1
-                        if self.is_capturing(i, j, dx, dy, 2):
-                            self.black_m += 1
+    # def update_mobility(self):
+    #     self.black_m = 0
+    #     self.white_m = 0
+    #     for i in range(8):
+    #         for j in range(8):
+    #             if self.chesses[i][j] == 0:
+    #                 for dx, dy in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
+    #                     if self.is_capturing(i, j, dx, dy, 1):
+    #                         self.white_m += 1
+    #                     if self.is_capturing(i, j, dx, dy, 2):
+    #                         self.black_m += 1
 
-    def is_capturing(self, x, y, dx, dy, current_player):
-        opponent = 1 if current_player == 2 else 2
-        x += dx
-        y += dy
-        if x < 0 or x > 7 or y < 0 or y > 7:
-            return False
-        if self.chesses[x][y] != opponent:
-            return False
-        x += dx
-        y += dy
-        while x >= 0 and x <= 7 and y >= 0 and y <= 7:
-            if self.chesses[x][y] == 0:
-                return False
-            if self.chesses[x][y] == current_player:
-                return True
-            x += dx
-            y += dy
-        return False
+    # def is_capturing(self, x, y, dx, dy, current_player):
+    #     opponent = 1 if current_player == 2 else 2
+    #     x += dx
+    #     y += dy
+    #     if x < 0 or x > 7 or y < 0 or y > 7:
+    #         return False
+    #     if self.chesses[x][y] != opponent:
+    #         return False
+    #     x += dx
+    #     y += dy
+    #     while x >= 0 and x <= 7 and y >= 0 and y <= 7:
+    #         if self.chesses[x][y] == 0:
+    #             return False
+    #         if self.chesses[x][y] == current_player:
+    #             return True
+    #         x += dx
+    #         y += dy
+    #     return False
 
 
     def updateAvailable(self):

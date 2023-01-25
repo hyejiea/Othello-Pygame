@@ -13,7 +13,7 @@ def main():
     # init
     pygame.init()
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    pygame.display.set_caption('Player VS AI')
+    pygame.display.set_caption('Othello-AI-Pruning')
 
     # load images
     images = Images()
@@ -45,20 +45,9 @@ def main():
                     px, py = pygame.mouse.get_pos()
                     set_i = (py - chessboard.margin) // chessboard.width
                     set_j = (px - chessboard.margin) // chessboard.width
-                # else:
-                #     set_i, set_j = chessboardTree.findBestChess(player_color)
-                if (set_i, set_j) in chessboard.available:
-                    chessboardTree.root = chessboardTree.root.kids[(
-                        set_i, set_j)]
-                    chessboard = chessboardTree.root.chessboard
-                    # update screen
-                    draw(screen, images, chessboard)
-                    pygame.display.update()
-                    # expand only 1 layer
-                    chessboardTree.expandTree()
-
-                    # ai to move
+                else:
                     set_i, set_j = chessboardTree.findBestChess(player_color)
+                if (set_i, set_j) in chessboard.available:
                     chessboardTree.root = chessboardTree.root.kids[(
                         set_i, set_j)]
                     chessboard = chessboardTree.root.chessboard
